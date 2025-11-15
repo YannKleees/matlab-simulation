@@ -16,6 +16,7 @@ num  = 10000;
 % values in the interval [0,1). Each call updates the internal 32-bit LCG state and applies a 
 % permutation to produce a 16-bit output. 
 % This output is then scaled to the range [0, 1).
+
 U = RNG_PCG(num, a, c, seed);
 fprintf('We generated %d U[0,1) values.\n', num);
 sz = size(U);
@@ -33,6 +34,7 @@ disp(digits(1:20));
 %% Task 1b
 % In the poker test, each five-digit group is assigned to one of seven patterns,
 % and the frequency of each pattern's occurrence is counted.
+
 patterns = pokerCounts(U);   
 
 % Theoretical probabilities 
@@ -53,6 +55,7 @@ disp(expected);
 %% Chi-square test on the poker patterns
 % The chi-squared test checks whether the observed and expected counts match,
 % rejecting the null hypothesis if the observed count exceeds the critical value.
+
 alpha = 0.01; % alpha is the significance level
 [R,critval,reject] = pokerChi2(patterns, alpha);
 

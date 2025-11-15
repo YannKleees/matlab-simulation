@@ -52,7 +52,6 @@ for k = 1:nPOB
 end
 
 
-
 figure;
 hold on;
 % Boxplot implementation like in task2
@@ -104,7 +103,11 @@ title('Profit distribution for different payout boundaries');
 grid on;
 saveas(gcf, 'pictureTask3.png');
 
-% Results summary:
+
+
+
+%% Results summary:
+
 % Across 20 replications with the default 24-hour payout boundary, the
 % system produced an average waiting time of around 2.12 minutes.An average
 % queue length of about 8.91 jobs and an average profit of around
