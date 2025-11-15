@@ -107,7 +107,9 @@ saveas(gcf, 'pictureTask3.png');
 
 
 %% Results summary:
-
+% Average waiting time: 2.1859 minutes
+%  Average queue length: 9.2784
+%  Average profit: 1102302.34 euro
 % Across 20 repliations with the default 24-hour payout boundary, the
 % system produced an average waiting time of around 2.12 minutes.An average
 % queue length of about 8.91 jobs and an average profit of around

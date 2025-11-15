@@ -71,9 +71,8 @@ fprintf('RR std: %.4f s\n', RRc_std);
 % long RR intervals, or detect noise as extra peaks, which produces artificially short RR
 % intervals.
 
-% By removing all RR intervals outside [Q1 - 1.5*IQR, Q3 + 1.5*IQR] and all non-positive
-% values, about 15.5 % of the extreme intervals are discarded. The median changes
-% only slightly, while the standard deviation drops from 0.9007s to 0.2705s. 
+% By removing all RR intervals beyond 1.5 IQR below Q1 or above Q3, along with all non-positive values, about 15.5% of the extreme intervals are gone. 
+% The median changes only slightly, while the standard deviation drops from 0.9007s to 0.2705s. 
 % This indicates that the plausible rhythm is preserved, but the extremes from detection errors are removed.
 
 %% 3. Time-series visualisation
