@@ -10,7 +10,6 @@ function [R,critval,reject] = pokerChi2(patterns,alpha)
     expected = N * p;
     % Chi-square statistic
     R = sum((patterns - expected).^2 ./ expected);
-    % Degrees of freedom
     df = 6;
     % I try to use chi2inv from the toolbox but if not available 
     % I use a simple implementation that i did myself
@@ -38,7 +37,7 @@ function x = chi2inv_simple(p, df)
     end
 
     lower = 0; %this is the lower bound for the search
-    upper = df + 10*sqrt(df) + 50; %this is the upper bound for the search
+    upper = df + 10*sqrt(df) + 50; % this is the upper bound for the search
 
     for iter = 1:60
         mid = (lower + upper) / 2;

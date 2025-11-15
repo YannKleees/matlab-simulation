@@ -1,10 +1,10 @@
-% Task 2  RR-interval analysis, cleaning and visualisation
-% This script loads RR-interval data, removes implausible and statistical outliers,
+% Task 2 is about RR-interval analysis, cleaning and visualisation
+% This script loads RR-interval data, removes implausible outliers,
 % and visualises the original and cleaned signals using several distinct plots.
 
 clear; clc; close all;
 
-%% 1. Load data and basic exploration
+%% 1. We load data and basic exploration
 load('dataTask2.mat');
 
 N     = numel(RR);
@@ -19,7 +19,7 @@ fprintf('RR range: [%.4f, %.4f] s\n', RRmin, RRmax);
 fprintf('RR mean: %.4f s\n', RRmean);
 fprintf('RR median: %.4f s\n', RRmed);
 fprintf('RR std: %.4f s\n', RRstd);
-%% 2. Outlier detection and cleaning
+%% 2. We perform outlier detection and cleaning
 
 % 1 Step I drop non‑positive values so the values that are impossible
 idxPhys = RR <= 0;
@@ -49,7 +49,7 @@ RRclean = RR(~idxBad);
 fprintf('The total outliers removed: %d (%.2f%% of data)\n', ...
     sum(idxBad), 100*sum(idxBad)/N);
 
-% Statistics after I cleaned the data
+% So, the statistics after I cleaned the data
 RRc_min = min(RRclean);
 RRc_max = max(RRclean);
 RRc_mean = mean(RRclean);
@@ -63,20 +63,18 @@ fprintf('RR median: %.4f s\n', RRc_med);
 fprintf('RR std: %.4f s\n', RRc_std);
 
 % Justification:
-% The original series contains extremely short intervals and very long
-% intervals. Such values correspond to heart rates far above 300 beats
-% per minute or prolonged pauses of many seconds and are very unlikely to represent true
-% RR intervals in this Holter recording.
+% The original series contains very short and long intervals. 
+% Like values correspond to heart rates far above 300 beats per minute 
+% or prolonged pauses of many seconds and are unlikely to represent actual RR intervals.
 
 % Simple threshold-based R-peak detection can either miss beats, which produces artificially
 % long RR intervals, or detect noise as extra peaks, which produces artificially short RR
-% intervals. The histograms and time series plots confirm a heavy-tailed distribution with
-% isolated extreme values.
+% intervals.
 
 % By removing all RR intervals outside [Q1 - 1.5*IQR, Q3 + 1.5*IQR] and all non-positive
-% values, about 15.5 percent of the most extreme intervals are discarded. The median changes
-% only slightly, while the standard deviation drops from 0.9007s
-% to 0.2705s. This indicates that the plausible rhythm is preserved, but the extremes from detection errors are removed.
+% values, about 15.5 % of the extreme intervals are discarded. The median changes
+% only slightly, while the standard deviation drops from 0.9007s to 0.2705s. 
+% This indicates that the plausible rhythm is preserved, but the extremes from detection errors are removed.
 
 %% 3. Time-series visualisation
 figure;
@@ -116,8 +114,7 @@ xlabel('RR interval [s]');
 ylabel('Count');
 title('Cleaned RR histogram');
 grid on;
-% The histograms show that the original data contains many extreme RR intervals, 
-% whereas the cleaned data is distributed more evenly around normal heartbeat durations.
+% The histograms show that the original data contains many extreme RR intervals, whereas the cleaned data is distributed more evenly around normal heartbeat durations.
 
 %% 5. Boxplot visualisation
 figure;
@@ -208,8 +205,7 @@ ylabel('RR_{n+1} [s]');
 title('Poincaré plot (cleaned)');
 grid on;
 
-% The original Poincaré plot shows many distant points with extreme RR values, 
-% whereas the cleaned plot forms a compact cluster reflecting normal beat-to-beat variability.
+% The original Poincaré plot shows many distant points with extreme RR values, whereas the cleaned plot forms a compact cluster reflecting normal beat-to-beat variability.
 
 %% 7. Empirical CDF comparison
 figure;
@@ -228,44 +224,40 @@ legend('Original','Cleaned','Location','southeast');
 title('Empirical CDF of original and cleaned RR intervals');
 grid on;
 
-% The original CDF stretches further to the right due to very long RR intervals, 
-% while the cleaned CDF rises faster because the extreme tail has been removed.
-
-
+% The original CDF stretches further to the right due to very long RR intervals, while the cleaned CDF rises faster because the extreme tail has been removed.
 
 
 
 %% RESULTS SUMMARY
 
 % The dataset contains 5,160 RR intervals from patient 15 of the SHDB Holter database. 
-% The raw data range extends from 0.0100 to 18.5933 seconds, with mean, median and standard deviation values of 1.0270, 0.8250 and 0.9007 seconds, respectively. 
+% The raw data range extends from 0.0100 to 18.5933 seconds, with mean, median and standard deviation values of 1.0270, 0.8250 and 0.9007 seconds. 
 % These values indicate a highly skewed distribution, with several extreme intervals that are unlikely to represent real heartbeats.
 %
-% Because the R-peaks were detected using a thresholding technique unrealistic 
-% RR intervals may appear. Very short intervals usually indicate false detections caused by 
-% noise being misinterpreted as heartbeats. Conversely, very long intervals are typically produced 
-% when the detector misses true R-peaks. These effects can be confirmed by the time-series plot. 
-% This shows isolated spikes far from the main rhythm and the histogram displays 
-% A long right tail extending beyond 10 seconds.
+% Because the R-peaks were detected using a thresholding technique unrealistic RR intervals may appear. 
+% Very short intervals usually indicate false detections caused by noise being misinterpreted as heartbeats.
+% On the other side very long intervals are typically produced when the detector misses actual R-peaks. 
+% These effects can be confirmed by the time-series plot that I coded. 
+% This shows isolated spikes far from the main rhythm and the histogram displays a long right tail extending beyond 10 seconds.
 %
-% These artefacts were identified and removed using the Tukey interquartile range method. 
-% With Q1 = 0.7500s and Q3 = 1.1350s, the interquartile range was found to be 0.3850s. 
-% This yields lower and upper fences of 0.1725 and 1.7125s respectively. All RR intervals outside this range, 
+% After identifing those artefacts and removing them using the Tukey interquartile range method we got that
+% in Q1 = 0.7500s and Q3 = 1.1350s, the interquartile range was 0.3850s. 
+% This yields lower and upper fences of 0.1725 and 1.7125s. All RR intervals outside this range, 
 % together with any non-positive values, were treated as implausible and removed. A total of 800 values were excluded.
 %
 % After cleaning, the RR intervals fell within the range of 0.1750 to 1.7100 s, with a mean value of 0.9399 s. 
-% seconds, a median of 0.83 s and a reduced standard deviation of 0.27 s. The small 
-% change in the median, but a large reduction in the standard deviation, indicates that the central rhythm 
+% A median of 0.83 s and a reduced standard deviation of 0.27 s. 
+% As already indicated the small change in the median, but the large reduction in the standard deviation, indicates that the central rhythm 
 % was preserved, with only the extreme values removed.
 %
-% The different visualisations reinforce this conclusion. 
+% My different visualisations reinforce the conclusion. 
 % - The time-series plots clearly show the disappearance of extreme spikes after cleaning.
 % - The histograms show that the cleaned distribution is centred and plausible, with no long tail. 
 % - The box plots highlight the reduction in outliers and the tighter IQR range. 
 % - The Poincaré plot changes from a set of scattered distant points to a compact cluster, indicating that beat-to-beat variability 
-% becomes more realistic once artefacts have been removed. 
+% becomes realistic once artefacts have been removed. 
 % - Finally, the empirical CDF shows that the original distribution extends far to the right due to the presence of extreme values. 
-% In contrast, the cleaned CDF rises quickly because the heavy tail is no longer present.
+% In contrast, the cleaned CDF rises very quickly because the heavy tail is no longer present. 
+% (I don't really like this visualisation but I found nothing better to visualise the effect.)
 %
-% Together, these analyses demonstrate that the removed values are indeed outliers caused by detection 
-% rather than genuine behaviour.
+% So, these analyses demonstrate that the removed values are indeed outliers caused by detection. And not actual heartbeats.

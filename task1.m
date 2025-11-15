@@ -1,10 +1,9 @@
 % The Task 1 script performs three main tasks. 
 % First, it uses the RNG_PCG function to generate 10000 random numbers uniformly distributed between 0 and 1. 
-% Secondly, it applies a five-digit poker test to the generated values to evaluate their statistical properties. 
-% Thirdly, it runs a chi-square test to determine whether the generator produces values consistent with a truly 
-% uniform random sequence and passes the poker test.
+% Secondly, it applies the five-digit poker test to the generated values to evaluate their statistical properties. 
+% Thirdly, it runs a chi-square test to determine whether the generator produces values consistent with a truly uniform random sequence and passes the poker test.
 
-%% Parameters for the PCG
+%% So the parameters for the PCG
 a    = 846793005;
 c    = 294755497;
 seed = 19;
@@ -12,13 +11,13 @@ num  = 10000;
 
 %% Task 1a
 % Generate random numbers using our PC.
-% the RNG_PCG function calls PCG_SSA function repeatedly to produce num uniformly distributed
-% values in the interval [0,1). Each call updates the internal 32-bit LCG state and applies a 
-% permutation to produce a 16-bit output. 
+% the RNG_PCG function calls PCG_SSA function repeatedly to produce num uniformly distributed values in the interval [0,1). 
+% Each call updates the 32-bit LCG state and applies a permutation to produce a 16-bit output. 
 % This output is then scaled to the range [0, 1).
 
 U = RNG_PCG(num, a, c, seed);
 fprintf('We generated %d U[0,1) values.\n', num);
+
 sz = size(U);
 fprintf('The size of U is [%d %d].\n', sz(1), sz(2));
 disp('First 10 U values:');
@@ -32,8 +31,7 @@ disp(digits(1:20));
 
 
 %% Task 1b
-% In the poker test, each five-digit group is assigned to one of seven patterns,
-% and the frequency of each pattern's occurrence is counted.
+% In the poker test, each five-digit group is assigned to one of seven patterns, and the frequency of each pattern's occurrence is counted.
 
 patterns = pokerCounts(U);   
 
@@ -70,3 +68,14 @@ else
     disp('So the observed poker pattern counts are compatible with');
     disp('what we expect under i.i.d. U[0,1) which means that the generator looks okay in this test.');
 end
+
+%% Summary
+% Results for the values
+% a    = 846793005;
+% c    = 294755497;
+% seed = 19;
+% num  = 10000;
+% The observed counts match theoretical expectations
+% Chi-square statistic are less than the  critical value 0.69 < 16.81
+% This means that the PCG passes the poker test at alpha=0.01
+% The generator produces random numbers for the poker test so these numbers are acceptable.

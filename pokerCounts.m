@@ -19,24 +19,22 @@ function patterns = pokerCounts(U)
         for i = 1:5
             counts(d(i)+1) = counts(d(i)+1) + 1;
         end
-
-        % Only non-zero counts are included and they are sorted in descending order.
         cc = sort(counts(counts>0),'descend');
 
         if     isequal(cc,[1 1 1 1 1])
-            patterns(1) = patterns(1) + 1;   % all different poker cards
+            patterns(1) = patterns(1) + 1; % all different numbers
         elseif isequal(cc,[2 1 1 1])
-            patterns(2) = patterns(2) + 1;   % one pair poker cards
+            patterns(2) = patterns(2) + 1; % one pair
         elseif isequal(cc,[2 2 1])
-            patterns(3) = patterns(3) + 1;   % two pairs poker cards
+            patterns(3) = patterns(3) + 1; % two pairs
         elseif isequal(cc,[3 1 1])
-            patterns(4) = patterns(4) + 1;   % three of a kind poker cards
+            patterns(4) = patterns(4) + 1; % three of a kind
         elseif isequal(cc,[3 2])
-            patterns(5) = patterns(5) + 1;   % full house poker cards
+            patterns(5) = patterns(5) + 1; % full house
         elseif isequal(cc,[4 1])
-            patterns(6) = patterns(6) + 1;   % four of a kind poker cards
+            patterns(6) = patterns(6) + 1; % four of a kind
         elseif isequal(cc,[5])
-            patterns(7) = patterns(7) + 1;   % five of a kind poker cards
+            patterns(7) = patterns(7) + 1; % five of a kind
         end
     end
 end

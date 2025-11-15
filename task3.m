@@ -1,8 +1,8 @@
-%Task 3: Discrete-event simulation of the M/M/3 system
-%This script performs 20 simulations of the three-machine production system via the DES function. 
-% The average waiting time, average queue length and average profit are then reported for the default 24-hour payout boundary.
+%The task 3 script is about Discrete-event simulation of the M/M/3 system
+%So this script performs 20 simulations of the three-machine production system using the DES.m file/function. 
+% The average waiting time, average queue length and average profit are then shown for the default 24-hour payout boundary.
 %The simulation is then repeated for payout boundaries of 10, 16, 24 and 30 hours. 
-% The resulting profits are compared using box plots, which are saved as pictureTask3.png.
+% The resulting profits are compared using box plots, which we save as pictureTask3.png.
 clear; clc; close all;
 
 n = 20;
@@ -29,9 +29,9 @@ fprintf('  Average queue length: %.4f\n', meanQL);
 fprintf('  Average profit: %.2f euro\n\n', meanProfit);
 
 % Comment:
-% The average waiting time summarises how long products spend in the system
-% from arrival to completion. The average queue length is the time‑average
-% number of waiting jobs, obtained via the area under the queue‑length curve
+% The average waiting time can be summariesed by how long products spend in the system
+% from arrival to completion. The average queue length is the average time
+% number of waiting jobs, which I obtain using the area under the queue‑length curve
 % divided by the simulated time. The profit combines per‑job revenues and time‑based production
 % costs of 1000 euro per hour.
 
@@ -108,17 +108,17 @@ saveas(gcf, 'pictureTask3.png');
 
 %% Results summary:
 
-% Across 20 replications with the default 24-hour payout boundary, the
+% Across 20 repliations with the default 24-hour payout boundary, the
 % system produced an average waiting time of around 2.12 minutes.An average
 % queue length of about 8.91 jobs and an average profit of around
-% 1.10 million euro. The waiting time is far below the 24 hourly threshold,
-% which means almost all jobs receive the higher payout.
+% 1.10 million euro. The waiting time is below the 24 hourly threshold,
+% which means nearly all jobs receive the higher payout.
 %
-% When comparing payout boundaries of 10, 16, 24 and 30 hours, the boxplot
-% show a clear upward shift in profit as the boundary increases. A smaller
-% boundary classifies more jobs as slow, reducing revenue, while a larger
+% When I compare the payout boundaries of 10, 16, 24 and 30 hours to the boxplot it
+% shows a clear upward shift in profit as the boundary increases. A smaller
+% boundary classifies more jobs as slow which reduces revenue while a larger
 % boundary allows more jobs to qualify for the higher payout. The lowest
 % profits occur at 10 hours and the highest at 30 hours, with very little
-% variation between runs, indicating stable system behaviour.
+% variation between runs which indicates  a stable system behaviour.
 
 
